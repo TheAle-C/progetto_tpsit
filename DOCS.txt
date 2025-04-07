@@ -1,4 +1,4 @@
-Glossario:
+NB:
     + Riferimenti a metodi di classi e oggetti:
         Classe.metodo()
 
