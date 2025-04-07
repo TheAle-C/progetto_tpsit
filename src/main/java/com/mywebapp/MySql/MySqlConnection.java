@@ -11,7 +11,7 @@ public class MySqlConnection {
     // selezionare nel menu a tendina "Platform Independent"
     // nome pacchetto: Platform Independent (Architecture Independent), ZIP Archive
     // scaricarlo, estrarlo ed infine importarlo nel progetto
-    private String DRIVER = "com.mysql.jdbc.Driver";
+    private String DRIVER = "com.mysql.cj.jdbc.Driver";
     private String User;
     private String Password;
 
@@ -37,12 +37,12 @@ public class MySqlConnection {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            Logger.error(e.getMessage());
+            Logger.error(STR."Errore nel caricamento dei driver: \{e.getMessage()}");
         }
     }
 
     public void connect(String DatabaseAddress, String DatabasePort, String DatabaseName) {
-        String tmp_url_db = "jdbc:mysql://" + DatabaseAddress + ":" + DatabasePort + "/" + DatabaseName;
+        String tmp_url_db = STR."jdbc:mysql://\{DatabaseAddress}:\{DatabasePort}/\{DatabaseName}";
 
         connection = null;
 

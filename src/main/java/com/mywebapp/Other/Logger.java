@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Logger {
 
-    private static String logFilePath = "default.log"; // fallback se non impostato
+    private static String logFilePath = "default_web_app.log"; // fallback se non impostato
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     // Imposta il percorso del file di log (va fatto all'avvio della webapp)
@@ -33,7 +33,7 @@ public class Logger {
             writer.newLine();
         } catch (IOException e) {
             // In caso di errore, stampa a console
-            System.err.println("Logger error: " + e.getMessage());
+            System.err.println(STR."Logger error: \{e.getMessage()}");
         }
     }
 

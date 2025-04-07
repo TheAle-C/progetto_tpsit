@@ -19,8 +19,6 @@ public class test extends HttpServlet {
 
         ResultSet res = db.query("SELECT * FROM test");
 
-
-
         try {
             while (res.next()) {
                 out.println(res.getString(1));
