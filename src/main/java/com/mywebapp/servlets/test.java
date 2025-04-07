@@ -1,6 +1,7 @@
 package com.mywebapp.servlets;
 
 import com.mywebapp.MySql.Database;
+import com.mywebapp.Other.Logger;
 
 import java.io.*;
 import java.sql.ResultSet;
@@ -21,10 +22,10 @@ public class test extends HttpServlet {
 
         try {
             while (res.next()) {
-                out.println(res.getString(1));
+                out.println(res.getString(1) + " " + res.getString(2) + " " + res.getString(3) + " " + res.getString(4) + "<br>");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Logger.error(e.getMessage());
         }
 
         db.close(); // chiusura della connessione

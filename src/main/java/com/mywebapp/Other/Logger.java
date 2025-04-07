@@ -32,8 +32,7 @@ public class Logger {
             writer.write(fullMessage);
             writer.newLine();
         } catch (IOException e) {
-            // In caso di errore, stampa a console
-            System.err.println(STR."Logger error: \{e.getMessage()}");
+            System.err.println("Logger error: " + e.getMessage());
         }
     }
 

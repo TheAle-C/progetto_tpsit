@@ -37,12 +37,12 @@ public class MySqlConnection {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            Logger.error(STR."Errore nel caricamento dei driver: \{e.getMessage()}");
+            Logger.error("Errore nel caricamento dei driver: " + e.getMessage());
         }
     }
 
     public void connect(String DatabaseAddress, String DatabasePort, String DatabaseName) {
-        String tmp_url_db = STR."jdbc:mysql://\{DatabaseAddress}:\{DatabasePort}/\{DatabaseName}";
+        String tmp_url_db = "jdbc:mysql://" + DatabaseAddress + ":" + DatabasePort + "/" + DatabaseName;
 
         connection = null;
 
