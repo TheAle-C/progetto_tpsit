@@ -1,0 +1,22 @@
+Glossario:
+    + Riferimenti a metodi di classi e oggetti:
+        Classe.metodo()
+
+        esempio codice: obj.test(); -> nel docs diventa: ClassObj.test()
+
+Classi:
+    + MySqlConnection:
+        Descrizione:
+                Gestisce la connessione con il database.
+                Il suo uso non è essenziale poiché integrato nella classe Database.
+        Metodi principali:
+                { MySqlConnection(), void connect(), void close() }
+    + Database:
+        Descrizione:
+            Gestisce la connessione e l'interazione con il database, permetendo di fare le query
+        Metodi principali: {
+                Database(user, password) -> istanzia MySqlConnection()
+                void connect(server_ip, porta, nome_db) -> esegue la connessione, richiamando MySqlConnection.connect()
+                ResultSet query(query) -> esegue la query, ritornando ResultSet
+                void close() -> chiude la connessione al database
+            }
