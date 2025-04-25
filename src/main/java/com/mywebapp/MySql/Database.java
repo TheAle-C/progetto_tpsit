@@ -32,6 +32,15 @@ public class Database {
         }
     }
 
+    public void queryUpdate(String query) {
+        try {
+            Statement statement = conn.getConnection().createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+        }
+    }
+
     public void close() {
         conn.close();
     }

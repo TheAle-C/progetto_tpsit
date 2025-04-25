@@ -1,0 +1,8 @@
+Login / Register:
+    form:
+        name="" -> nei vari componenti, es: input email "<input type="email" id="email" name="emailInput" required>"
+        method="POST"
+        action="verifyRegister" / action="verifyLogin"
+
+Tutti:
+    Verifica cookie a inizio paggina
