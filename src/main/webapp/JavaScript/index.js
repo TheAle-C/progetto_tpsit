@@ -1,5 +1,4 @@
-
-
+// --------------------------------------------------------------------------------------------------------------------- HOME PAGE: MINI CART
 function addToCart(productId) {
     // Recupera il prodotto selezionato tramite l'ID del prodotto
 	$.ajax({
@@ -10,14 +9,8 @@ function addToCart(productId) {
         },
         success: function(response) {
 			alert("Prodotto aggiunto al carello!");
-
-			updateCartTotals();
 			
-			if (countItemsInCart() > 8) {
-			}
-			else {
-				updateCart(response[0]); // attenzione, viene ritornato un array
-			}
+			updateCart(response[0]); // attenzione, viene ritornato un array
         },
         error: function() {
             alert("Errore durante l'aggiunta al carrello.");
@@ -29,38 +22,70 @@ function updateCart(response) {
 	console.log("Risposta ricevuta:", response);
 	
 	const cart = document.getElementById('miniCartProducts');
-	
-	const card = document.createElement('div');
-    card.className = 'cart-item';
 
-    card.innerHTML = `
-		<img src="${response.image}" alt="${response.name}">
-	    <div class="item-details">
-	        <h5>${response.name}</h5>
-	        <div class="quantity-controls">
-	            <button class="quantity-btn minus">-</button>
-	            <span class="quantity">1</span>
-	            <button class="quantity-btn plus" onclick="">+</button>
-	        </div>
-	        <p class="item-price" data-price="${response.price}">€${response.price}</p>
-	    </div>
-	    <button class="remove-item">&times;</button>
-    `;
+	if (cart.querySelectorAll('.cart-item').length < 7) {
+		const card = document.createElement('div');
+		card.className = 'cart-item';
+		/*
+		.append("\"id\":").append(rs.getInt("id")).append(",")
+        .append("\"brand\":\"").append(escapeJson(rs.getString("brand"))).append("\",")
+        .append("\"name\":\"").append(escapeJson(rs.getString("name"))).append("\",")
+        .append("\"description\":\"").append(escapeJson(rs.getString("description"))).append("\",")
+        .append("\"price\":").append(rs.getDouble("price")).append(",")
+        .append("\"stock\":").append(rs.getInt("stock")).append(",")
+        .append("\"insertionDate\":\"").append(rs.getDate("insertion_date")).append("\",")
+        .append("\"catalogId\":").append(rs.getInt("catalog_id")).append(",")
+        .append("\"image\":\"").append(escapeJson(rs.getString("image"))).append("\"").append(",")
+        .append("\"totalCart\":").append(price)
+		*/
+		
+		card.innerHTML = `
+    	    <img src="${response.image}" alt="${response.name}">
+		    <div class="item-details">
+		        <h5>${response.name}</h5>
+		        <p class="item-price" data-price="${response.price}">€${response.price}</p>
+		    </div>
+		    <button class="remove-item">&times;</button>
+        `;
+		cart.appendChild(card);
+	}
 
-    cart.appendChild(card);
+	updateCartTotal();
+	document.getElementById('total-amount').textContent = `€${response.totalCart.toFixed(2)}`;
 }
 
 function countItemsInCart() {
     let totalItems = 0;
-
+	console.log("num of items in cart (countItemsInCart()): " +  document.querySelectorAll('.cart-item').length);
     document.querySelectorAll('.cart-item').forEach(item => {
-        const quantity = parseInt(item.querySelector('.quantity').textContent);
-        totalItems += quantity;
+        totalItems += 1;
     });
 
     return totalItems;
 }
 
+function updateCartPrice() {
+    let total = 0;    
+	document.querySelectorAll('.cart-item').forEach(item => {
+        const unitPrice = parseFloat(item.querySelector('.item-price').dataset.price);
+        total += unitPrice;
+    });
+	
+	document.querySelector('.total-amount').textContent = `€${total.toFixed(2)}`;
+}
+
+function updateCartTotal() {
+    let totalItems = 0;
+    
+	document.querySelectorAll('.cart-item').forEach(item => {
+		totalItems ++;
+    });
+
+    document.querySelector('.cart-items-count').textContent = `${totalItems > 6 ? '7+' : totalItems} articol${totalItems !== 1 ? 'i' : 'o'}`;
+    document.querySelector('.cart-counter').textContent = totalItems > 6 ? '7+' : totalItems;
+}
+
+// --------------------------------------------------------------------------------------------------------------------- HOME PAGE: PRODUCT
 function loadMostSelledProduct() {
 	document.addEventListener('DOMContentLoaded', function() {
 	    console.log("(MostSelledProd:) Pagina caricata, lancio fetch...");
@@ -79,7 +104,7 @@ function loadMostSelledProduct() {
 	                card.className = 'product-card';
 
 	                card.innerHTML = `
-	                    <img src="${product.image}" class="product-image" alt="${product.name}">
+	                    <a href="ViewProduct?id=${product.id}"><img src="${product.image}" class="product-image" alt="${product.name}"></a>
 	                    <h3>${product.name}</h3>
 	                    <p class="product-price">${product.price} €</p>
 	                    <input type="hidden" name="IdProduct" value="${product.id}">

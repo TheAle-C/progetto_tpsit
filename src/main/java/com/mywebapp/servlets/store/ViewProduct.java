@@ -28,7 +28,7 @@ public class ViewProduct extends HttpServlet {
 
             int id = Integer.parseInt(req.getParameter("id"));
 
-            ResultSet rs = db.query("SELECT * FROM prodotto WHERE id = '" + id + "'");
+            ResultSet rs = db.query("SELECT * FROM products WHERE id = '" + id + "'");
 
             if (rs.next()) {
                 String brand = rs.getString("brand");

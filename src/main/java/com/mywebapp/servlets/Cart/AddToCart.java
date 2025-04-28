@@ -4,6 +4,7 @@ import com.mywebapp.MySql.Database;
 import com.mywebapp.Other.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@WebServlet("/AddToCart")
 public class AddToCart extends HttpServlet {
 
     @Override
@@ -52,6 +54,11 @@ public class AddToCart extends HttpServlet {
                 System.out.println("Aggiunto");
                 session.setAttribute("Cart", prodList);
 
+                double totale = 0f;
+                for (Product _tmp : prodList) {
+                    totale += _tmp.price;
+                }
+
                 jsonBuilder.append("[{")
                         .append("\"id\":").append(rs.getInt("id")).append(",")
                         .append("\"brand\":\"").append(escapeJson(rs.getString("brand"))).append("\",")
@@ -61,7 +68,8 @@ public class AddToCart extends HttpServlet {
                         .append("\"stock\":").append(rs.getInt("stock")).append(",")
                         .append("\"insertionDate\":\"").append(rs.getDate("insertion_date")).append("\",")
                         .append("\"catalogId\":").append(rs.getInt("catalog_id")).append(",")
-                        .append("\"image\":\"").append(escapeJson(rs.getString("image"))).append("\"")
+                        .append("\"image\":\"").append(escapeJson(rs.getString("image"))).append("\"").append(",")
+                        .append("\"totalCart\":").append(totale)
                         .append("}]");
             }
         } catch (SQLException e) {

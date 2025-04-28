@@ -14,10 +14,6 @@
     <servlet-class>com.mywebapp.servlets.access.Register</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>AddToCart</servlet-name>
-    <servlet-class>com.mywebapp.servlets.Cart.AddToCart</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>RemoveToCart</servlet-name>
     <servlet-class>com.mywebapp.servlets.Cart.RemoveToCart</servlet-class>
   </servlet>
@@ -37,10 +33,6 @@
   <servlet-mapping>
     <servlet-name>register</servlet-name>
     <url-pattern>/verifyRegister</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AddToCart</servlet-name>
-    <url-pattern>/AddToCart</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RemoveToCart</servlet-name>
