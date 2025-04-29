@@ -46,7 +46,7 @@ if (cookies != null) {
 	    <!-- Header identico -->
 	    <header>
 	        <nav class="nav-container">
-	            <a href="#" class="logo">Tecno</a>
+	            <a href="index.jsp" class="logo">Tecno</a>
 	            <ul class="nav-links">
 	                <li><a href="#">Telefonia</a></li>
 	                <li><a href="#">TV</a></li>
@@ -78,10 +78,11 @@ if (cookies != null) {
 	                    					int items = 0;
 	                    					
 	                    		            for (Product _tmp : list) {
-	                    		            	cartTotalPrice += _tmp.price; 
-                    		            		items ++;
-	                    		            	if (items < 8) {%>
-													<div class="cart-item">
+	                    		            	cartTotalPrice += _tmp.price;
+	                    		            	items ++;
+	                    		            	if (items < 8) { 
+	                    		            		%>
+													<div class="cart-item" id="cart-item">
 		                    		            	    <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
 													    <div class="item-details">
 													        <h5><%= _tmp.name %></h5>
@@ -93,21 +94,22 @@ if (cookies != null) {
 	                    		            }
 	                                	}
 	                                //} %>
+	
 	                                <!-- Altri items... -->
 	                            </div>
 	                            <div class="cart-total">
 	                                <span>Totale:</span>
-	                                <span class="total-amount" id="total-amount"></span>
+	                                <span class="total-amount" id="total-amount"><%= String.format("%.2f", cartTotalPrice) %>€</span>
 	                            </div>
-	                            <button class="btn">Checkout</button>
+	                            <button class="btn" onclick="window.location.href='checkout.jsp'">Checkout</button>
 	                        </div>
 	                    </div>
-	
-	                    <% if (isLoggedIn) {%>
+	                    
+						<% if (isLoggedIn) {%>
 							<i class="fas fa-user action-icon" 
 		                        role="button" 
 		                        tabindex="0"
-		                        onclick="window.location.href='cliente.jsp'"
+		                        onclick="window.location.href='UserArea'"
 		                        aria-label="Accedi al tuo account"></i>
 		                <% } else {%>
 							<i class="fas fa-user action-icon" 

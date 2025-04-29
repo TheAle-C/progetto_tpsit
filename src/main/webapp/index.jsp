@@ -34,7 +34,7 @@ if (cookies != null) {
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	    <script src="JavaScript/index.js"></script>
 	    
-	    <meta charset="UTF-8">
+	    <meta charset="UTF-16">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>TecnoStore | Premium Electronics</title>
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -44,7 +44,7 @@ if (cookies != null) {
 	<body>
 	    <header>
 	        <nav class="nav-container">
-	            <a href="#" class="logo">Tecno</a>
+	            <a href="index.jsp" class="logo">Tecno</a>
 	            <ul class="nav-links">
 	                <li><a href="#">Telefonia</a></li>
 	                <li><a href="#">TV</a></li>
@@ -109,6 +109,11 @@ if (cookies != null) {
 		                        tabindex="0"
 		                        onclick="window.location.href='UserArea'"
 		                        aria-label="Accedi al tuo account"></i>
+		                    <i class="fas fa-sign-out-alt action-icon" 
+	                        	role="button" 
+	                        	tabindex="0"
+	                        	onclick="window.location.href='logout.jsp'"
+	                            aria-label="Logout"></i>
 		                <% } else {%>
 							<i class="fas fa-user action-icon" 
 		                        role="button" 

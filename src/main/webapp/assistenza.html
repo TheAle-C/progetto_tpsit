@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TecnoStore | Premium Electronics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -32,7 +32,7 @@
                                 <span class="cart-items-count">3 articoli</span>
                             </div>
                             <div class="cart-items">
-                                <!--<div class="cart-item">
+                                <div class="cart-item">
                                     <img src="https://images.unsplash.com/photo-1537589376225-5405c60a5bd8" alt="Smartphone X">
                                     <div class="item-details">
                                         <h5>Smartphone X</h5>
@@ -44,8 +44,21 @@
                                         <p class="item-price" data-price="899.00">€899.00</p>
                                     </div>
                                     <button class="remove-item">&times;</button>
-                                </div>-->
+                                </div>
 
+                                <div class="cart-item">
+                                    <img src="https://images.unsplash.com/photo-1537589376225-5405c60a5bd8" alt="Smartphone X">
+                                    <div class="item-details">
+                                        <h5>Smartphone X</h5>
+                                        <div class="quantity-controls">
+                                            <button class="quantity-btn minus">−</button>
+                                            <span class="quantity">1</span>
+                                            <button class="quantity-btn plus">+</button>
+                                        </div>
+                                        <p class="item-price" data-price="899.00">€899.00</p>
+                                    </div>
+                                    <button class="remove-item">&times;</button>
+                                </div>
                                 <!-- Altri items... -->
                             </div>
                             <div class="cart-total">
@@ -67,71 +80,17 @@
         </nav>
     </header>
 
-    <main class="checkout-container">
-        <div class="checkout-grid">
-            <!-- Sezione Informazioni -->
-            <section class="checkout-form">
-                <h2 class="section-title">Indirizzo Spedizione</h2>
-                
-                <form class="payment-form">                    
-                    <div class="form-group">
-                        <label>Via/Piazza</label>
-                        <input type="text" required class="form-input">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Città</label>
-                            <input type="text" required class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label>CAP</label>
-                            <input type="number" required class="form-input">
-                        </div>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Riepilogo ordine -->
-            <aside class="order-summary">
-                <h2 class="section-title">Il tuo ordine</h2>
-                
-                <div class="summary-items">
-                    <div class="summary-item">
-                        <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2" alt="Laptop Pro">
-                        <div class="item-details">
-                            <h4>Laptop UltraSlim Pro</h4>
-                            <p>€1,299.00 x 1</p>
-                        </div>
-                    </div>
-                    <!-- Altri items -->
+    <section class="products-section">
+            <h2 class="section-title">Centro Garanzia</h2>
+            <div class="product-card">
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Via delle Garanzie 15, Milano</p>
+                    <p><i class="fas fa-phone"></i> +39 02 9876543</p>
+                    <p><i class="fas fa-clock "></i> Lun-Ven: 9:00-18:00</p>
                 </div>
-
-                <div class="summary-totals">
-                    <div class="total-row">
-                        <span>Subtotale:</span>
-                        <span>€2,697.00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Spedizione:</span>
-                        <span>Gratuita</span>
-                    </div>
-                    <div class="total-row grand-total">
-                        <span>Totale:</span>
-                        <span>€2,697.00</span>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary">Conferma ordine</button>
-                
-                <div class="security-info">
-                    <i class="fas fa-lock"></i>
-                    <p>Transazione sicura crittografata SSL</p>
-                </div>
-            </aside>
-        </div>
-    </main>
-
+                <button class="btn">Verifica Garanzia</button>
+            </div>
+    </section>
 
     <footer>
         <div class="footer-container">

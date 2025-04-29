@@ -26,18 +26,6 @@ function updateCart(response) {
 	if (cart.querySelectorAll('.cart-item').length < 7) {
 		const card = document.createElement('div');
 		card.className = 'cart-item';
-		/*
-		.append("\"id\":").append(rs.getInt("id")).append(",")
-        .append("\"brand\":\"").append(escapeJson(rs.getString("brand"))).append("\",")
-        .append("\"name\":\"").append(escapeJson(rs.getString("name"))).append("\",")
-        .append("\"description\":\"").append(escapeJson(rs.getString("description"))).append("\",")
-        .append("\"price\":").append(rs.getDouble("price")).append(",")
-        .append("\"stock\":").append(rs.getInt("stock")).append(",")
-        .append("\"insertionDate\":\"").append(rs.getDate("insertion_date")).append("\",")
-        .append("\"catalogId\":").append(rs.getInt("catalog_id")).append(",")
-        .append("\"image\":\"").append(escapeJson(rs.getString("image"))).append("\"").append(",")
-        .append("\"totalCart\":").append(price)
-		*/
 		
 		card.innerHTML = `
     	    <img src="${response.image}" alt="${response.name}">
@@ -153,3 +141,5 @@ function loadNewProduct() {
 	        });
 	});
 }
+
+// ------------------------------------------------------------------------------------------------------------------------- CHECKOUT

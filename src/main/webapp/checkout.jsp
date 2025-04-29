@@ -1,129 +1,355 @@
-<%@page import="java.util.List"%>
 <%@page import="com.mywebapp.servlets.Cart.Product"%>
-<%@ page import="javax.servlet.http.Cookie" %>
-<%@ page import="java.util.*"%>
-<%@ page session="true" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%!
+Cookie cookie = null;
+double cartTotalPrice = 0f;
 
-<%! double totaleProdotti = 0.0; %>
+%>
+
+<%
+
+//-------------------------------------------------------------------------------------------- Verifica sessione
+boolean isLoggedIn = false;
+
+Cookie[] cookies = request.getCookies();
+
+if (cookies != null) {
+    for (Cookie tmp : cookies) {
+        if ("email".equals(tmp.getName()) && tmp.getValue() != null && !tmp.getValue().isEmpty()) {
+            isLoggedIn = true;
+            cookie = tmp;
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------------------------------------
+
+%>
+
 
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-    <link rel="stylesheet" href="CSS/tmpCheckout.css"></link>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="JavaScript/index.js"></script>
+
+    <meta charset="UTF-16">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecnoStore | Premium Electronics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-
-<div class="checkout-container">
-    <div class="checkout-left">
-        <h2>Checkout</h2>
-
-        <div class="checkout-section">
-            <h3>Dati di spedizione</h3>
-            <form id="checkoutForm">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" required>
-
-                <label for="cognome">Cognome</label>
-                <input type="text" id="cognome" name="cognome" required>
-
-                <label for="indirizzo">Indirizzo</label>
-                <input type="text" id="indirizzo" name="indirizzo" required>
-
-                <label for="città">Città</label>
-                <input type="text" id="città" name="città" required>
-
-                <label for="cap">CAP</label>
-                <input type="text" id="cap" name="cap" required>
-
-                <label for="telefono">Telefono</label>
-                <input type="tel" id="telefono" name="telefono">
-
-                <label for="note">Note per la consegna</label>
-                <textarea id="note" name="note" rows="3"></textarea>
-            </form>
-
-        <button class="checkout-button" onclick="confermaOrdine()">Conferma Ordine</button>
-    </div>
-
-    <div class="checkout-right">
-        <h3>Il tuo carrello</h3>
-        <div id="cartProducts" class="cart-products-list">
-        <%
-            Cookie[] cookies = request.getCookies();
-            String email = null;
-            
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("email".equals(cookie.getName())) {
-                        email = cookie.getValue();
-                        break;
-                    }
-                }
-            }
-
-            if (email != null) {
-                List<Product> cart = (List<Product>) session.getAttribute("Cart");
-                totaleProdotti = 0f;
-
-                if (cart != null && !cart.isEmpty()) {
-                    for (Product prodotto : cart) {
-        %>
-                        <div class="cart-product">
-                            <img src="<%= prodotto.image %>" alt="<%= prodotto.name %>">
-                            <div class="cart-product-details">
-                                <h4><%= prodotto.name %></h4>
-                                <p>$<%= String.format("%.2f", prodotto.price) %> x <%= prodotto.quantity %></p>
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">Tecno</a>
+            <ul class="nav-links">
+                <li><a href="#">Telefonia</a></li>
+                <li><a href="#">TV</a></li>
+                <li><a href="#">Cuffie</a></li>
+                <li><a href="#">Supporto</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="search-input">
+                    <input type="text" required>
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="actions-container">
+                    <div class="cart-wrapper">
+                        <i class="fas fa-shopping-bag action-icon" id="cart-icon"></i>
+                        <span class="cart-counter">3</span>
+                        <div class="cart-dropdown hidden">
+                            <div class="cart-header">
+                                <h4>Il tuo carrello</h4>
+                                <span class="cart-items-count">3 articoli</span>
                             </div>
-                        </div>
-        <%
-                        totaleProdotti += prodotto.price * prodotto.quantity;
-                    }
-                } else {
-        %>
-                    <p>Il carrello è vuoto.</p>
-        <%
-                }
-            } else {
-        %>
-                <p>Devi essere loggato per vedere il carrello.</p>
-        <%
-            }
-        %>
-        </div>
+                            <div class="cart-items" id="miniCartProducts">
+                                <% //if (isLoggedIn) {%>
+                                	
+                                <% //} else {
+	                                	if (session.getAttribute("Cart") != null) {
+	                    					ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("Cart");
+	                    					
+	                    					cartTotalPrice = 0;
+	                    					int items = 0;
+	                    					
+	                    		            for (Product _tmp : list) {
+	                    		            	cartTotalPrice += _tmp.price;
+	                    		            	items ++;
+	                    		            	if (items < 8) { 
+	                    		            		%>
+												<div class="cart-item" id="cart-item">
+	                    		            	    <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
+												    <div class="item-details">
+												        <h5><%= _tmp.name %></h5>
+												        <p class="item-price" data-price="<%= _tmp.price %>">€<%= _tmp.price %></p>
+												    </div>
+												    <button class="remove-item">&times;</button>
+												</div>
+									  	  <%}
+	                    		            }
+	                                	}
+	                                //} %>
 
-        <!-- Totali -->
-        <div class="order-summary">
-            <h3>Riepilogo ordine</h3>
-            <div class="summary-item">
-                <span>Prodotti</span>
-                <span id="prodottiTotali">$<%= String.format("%.2f", totaleProdotti) %></span>
+                                <!-- Altri items... -->
+                            </div>
+                            <div class="cart-total">
+                                <span>Totale:</span>
+                                <span class="total-amount" id="total-amount"><%= String.format("%.2f", cartTotalPrice) %>€</span>
+                            </div>
+                            <button class="btn" onclick="window.location.href='checkout.jsp'">Checkout</button>
+                        </div>
+                    </div>
+                    
+					<% if (isLoggedIn) {%>
+						<i class="fas fa-user action-icon" 
+	                        role="button" 
+	                        tabindex="0"
+	                        onclick="window.location.href='UserArea'"
+	                        aria-label="Accedi al tuo account"></i>
+                        <i class="fas fa-sign-out-alt action-icon" 
+                        	role="button" 
+                        	tabindex="0"
+                        	onclick="window.location.href='logout.jsp'"
+                            aria-label="Logout"></i>
+	                <% } else {%>
+						<i class="fas fa-user action-icon" 
+	                        role="button" 
+	                        tabindex="0"
+	                        onclick="window.location.href='login.jsp'"
+	                        aria-label="Accedi al tuo account"></i>
+	                <% }%>
+                </div>
             </div>
-            <div class="summary-item">
-                <span>Spedizione</span>
-                <span id="spedizione">$5.00</span>
+        </nav>
+    </header>
+
+    <main class="checkout-container">
+        <div class="checkout-grid">
+            <!-- Sezione Informazioni -->
+            <section class="checkout-form">
+                <h2 class="section-title">Indirizzo Spedizione</h2>
+                
+                <form class="payment-form">                    
+                    <div class="form-group">
+                        <label>Via/Piazza</label>
+                        <input type="text" required class="form-input">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CittÃ </label>
+                            <input type="text" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>CAP</label>
+                            <input type="number" required class="form-input">
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Riepilogo ordine -->
+            <aside class="order-summary">
+                <h2 class="section-title">Il tuo ordine</h2>
+                
+                <div class="summary-items">
+                	<%
+                	double cartTotalPrice = 0f;
+                	if (session.getAttribute("Cart") != null) {
+     					ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("Cart");
+     					
+     					cartTotalPrice = 0;
+     					int items = 0;
+     					
+     		            for (Product _tmp : list) {
+     		            	cartTotalPrice += _tmp.price;
+     		            	items ++;
+     		            	if (items < 8) {%>
+     		            	<div class="summary-item">
+		                       <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
+		                       <div class="item-details">
+		                           <h4><%= _tmp.name %></h4>
+		                           <p>€<%= _tmp.price %></p>
+		                       </div>
+		                   </div>
+					  	  <%}
+      		            }
+                  	}%>
+                
+                    
+                    <!-- Altri items -->
+                </div>
+
+                <div class="summary-totals">
+                    <div class="total-row">
+                        <span>Subtotale:</span>
+                        <span>€<%= cartTotalPrice %></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Spedizione:</span>
+                        <% if (cartTotalPrice < 50f) {%>
+                        	<span>€10</span>
+                        <%} else {%>
+                        	<span>Gratuita</span>
+                        <% } %>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Totale:</span>
+                        <span>€<%= (cartTotalPrice + 10f) %></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="window.location.href='OrderConfirmed'">Conferma ordine</button>
+            </aside>
+        </div>
+    </main>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">TecnoStore</h3>
+                    <p class="footer-tagline">Innovazione e qualitÃ  dal 2020</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+    
+                <div class="footer-col">
+                    <h4 class="footer-title">Prodotti</h4>
+                    <ul>
+                        <li><a href="#">Smartphone</a></li>
+                        <li><a href="#">Laptop</a></li>
+                        <li><a href="#">TV & Home Cinema</a></li>
+                        <li><a href="#">Accessori</a></li>
+                        <li><a href="#">Offerte speciali</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-col">
+                    <h4 class="footer-title">Supporto</h4>
+                    <ul>
+                        <li><a href="#">Centro assistenza</a></li>
+                        <li><a href="#">Guida all'acquisto</a></li>
+                        <li><a href="#">Garanzia</a></li>
+                        <li><a href="#">Resi e rimborsi</a></li>
+                        <li><a href="#">Contatti</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-col">
+                    <h4 class="footer-title">Contatti</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +39 02 1234567</li>
+                        <li><i class="fas fa-envelope"></i> info@tecnostore.it</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Via Roma 123, Milano</li>
+                    </ul>
+                </div>
             </div>
-            <div class="summary-item" style="font-weight: bold;">
-                <span>Totale</span>
-                <span id="totaleFinale">$<%= String.format("%.2f", (totaleProdotti + 5.00)) %></span>
+    
+            <div class="footer-bottom">
+                <div class="newsletter">
+                    <h4>Iscriviti alla newsletter</h4>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="La tua email" required>
+                        <button type="submit">Iscriviti <i class="fas fa-arrow-right"></i></button>
+                    </form>
+                </div>
+                
+                <div class="legal-links">
+                    <p>&copy; 2024 TecnoStore. Tutti i diritti riservati</p>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Termini e condizioni</a>
+                        <a href="#">Cookie Settings</a>
+                    </div>
+                </div>
             </div>
+        </div>
+    </footer>
+
+    <div class="loader-container">
+        <div class="bouncing-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
         </div>
     </div>
-</div>
+</body>
 
 <script>
-    function confermaOrdine() {
-        const form = document.getElementById('checkoutForm');
 
-        if (form.checkValidity()) {
-            alert("Ordine confermato! 🎉 Grazie per il tuo acquisto!");
-            form.reset();
-        } else {
-            alert("Compila tutti i campi obbligatori!");
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchIcon = document.querySelector('.search-input i');
+    const searchInput = document.querySelector('.search-input');
+    const searchField = searchInput.querySelector('input');
+
+    searchIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        searchInput.classList.toggle('active');
+        if(searchInput.classList.contains('active')) {
+            searchField.focus();
         }
-    }
-</script>
+    });
 
-</body>
+    document.addEventListener('click', (e) => {
+        if(!searchInput.contains(e.target)) {
+            searchInput.classList.remove('active');
+        }
+    });
+
+    // Chiudi con ESC
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') {
+            searchInput.classList.remove('active');
+        }
+    });
+    
+    
+	
+	// Inizializza carrello
+	updateCartTotal();
+	//updateCartPrice();
+});
+
+// Gestione apertura/chiusura carrello
+const cartIcon = document.getElementById('cart-icon');
+    const cartDropdown = document.querySelector('.cart-dropdown');
+
+    cartIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cartDropdown.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if(!cartDropdown.contains(e.target) && !cartIcon.contains(e.target)) {
+        cartDropdown.classList.remove('active');
+    }
+});
+
+
+window.addEventListener('load', () => {
+const loader = document.querySelector('.loader-container');
+
+    // Piccolo ritardo per fluiditÃ 
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        
+        // Rimuovi dopo l'animazione
+        setTimeout(() => {
+            loader.remove();
+        }, 1200);
+    }, 600);
+});
+</script>
 </html>

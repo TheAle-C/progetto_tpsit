@@ -4,46 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-
-  <servlet>
-    <servlet-name>login</servlet-name>
-    <servlet-class>com.mywebapp.servlets.access.Login</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>register</servlet-name>
-    <servlet-class>com.mywebapp.servlets.access.Register</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>RemoveToCart</servlet-name>
-    <servlet-class>com.mywebapp.servlets.Cart.RemoveToCart</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>ViewStore</servlet-name>
-    <servlet-class>com.mywebapp.servlets.store.ViewStore</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>ViewProduct</servlet-name>
-    <servlet-class>com.mywebapp.servlets.store.ViewProduct</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>login</servlet-name>
-    <url-pattern>/verifyLogin</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>register</servlet-name>
-    <url-pattern>/verifyRegister</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>RemoveToCart</servlet-name>
-    <url-pattern>/RemoveToCart</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ViewStore</servlet-name>
-    <url-pattern>/store</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>ViewProduct</servlet-name>
-    <url-pattern>/ViewProduct</url-pattern>
-  </servlet-mapping>
 </web-app>

@@ -77,7 +77,7 @@ if (cookies != null) {
 
                     <button type="submit" class="btn btn-full">Accedi ora</button>
 
-                    <p class="auth-switch">Nuovo cliente? <a href="registrazione.html">Crea un account</a></p>
+                    <p class="auth-switch">Nuovo cliente? <a href="registrazione.jsp">Crea un account</a></p>
                 </form>
             </div>
         </div>

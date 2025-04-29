@@ -79,6 +79,11 @@ else {
 	                <div class="user-profile">
 	                    <div class="user-avatar"><%= "" + userData.first_name.toUpperCase().charAt(0) + userData.last_name.toUpperCase().charAt(0) %></div>
 	                    <span><%= userData.first_name + " " + userData.last_name %></span>
+	                    <i class="fas fa-sign-out-alt action-icon" 
+	                        	role="button" 
+	                        	tabindex="0"
+	                        	onclick="window.location.href='logout.jsp'"
+	                            aria-label="Logout"></i>
 	                </div>
 	            </div>
 	        </header>
@@ -145,6 +150,7 @@ else {
 			                   						<a href="ViewProduct?id=<%= _tmp.id %>"><%= _tmp.name %></a><br>
 			                   					<% }%>
 				                            </td>
+				                            <% if (totalPrice < 50f) totalPrice += 10f; %>
 				                            <td><%= String.format("%.2f", totalPrice) %> €</td>
 				                            <%
 			                            	switch (tmp.status) {
