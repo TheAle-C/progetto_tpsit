@@ -49,7 +49,7 @@ if (cookies != null) {
 	                <li><a href="#">Telefonia</a></li>
 	                <li><a href="#">TV</a></li>
 	                <li><a href="#">Cuffie</a></li>
-	                <li><a href="#">Supporto</a></li>
+	                <li><a href="support.jsp">Supporto</a></li>
 	            </ul>
 	            <div class="header-actions">
 	                <div class="search-input">
@@ -174,11 +174,11 @@ if (cookies != null) {
 	                <div class="footer-col">
 	                    <h4 class="footer-title">Supporto</h4>
 	                    <ul>
-	                        <li><a href="#">Centro assistenza</a></li>
-	                        <li><a href="#">Guida all'acquisto</a></li>
-	                        <li><a href="#">Garanzia</a></li>
-	                        <li><a href="#">Resi e rimborsi</a></li>
-	                        <li><a href="#">Contatti</a></li>
+	                        <li><a href="support.jsp">Centro assistenza</a></li>
+	                        <li><a href="shopping_guide.jsp">Guida all'acquisto</a></li>
+	                        <li><a href="warranty_support.jsp">Garanzia</a></li>
+	                        <li><a href="returns_refunds.jsp">Resi e rimborsi</a></li>
+	                        <li><a href="contacts.jsp">Contatti</a></li>
 	                    </ul>
 	                </div>
 	    

@@ -28,7 +28,7 @@ if (cookies != null) {
                 <li><a href="#">Store</a></li>
                 <li><a href="#">Dispositivi</a></li>
                 <li><a href="#">Accessori</a></li>
-                <li><a href="#">Supporto</a></li>
+                <li><a href="support.jsp">Supporto</a></li>
             </ul>
             <div class="header-actions">
                 <i class="fas fa-search action-icon"></i>
