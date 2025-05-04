@@ -1,6 +1,6 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="com.mywebapp.servlets.Cart.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%!
 Cookie cookie = null;
@@ -66,7 +66,7 @@ if (cookies != null) {
 	                                <span class="cart-items-count">3 articoli</span>
 	                            </div>
 	                            <div class="cart-items" id="miniCartProducts">
-	                                <% //if (isLoggedIn) { // Se ci sarà il tempo per farlo: dovrà caricare il carello dal db %>
+	                                <% //if (isLoggedIn) {%>
 	                                	
 	                                <% //} else {
 	                                	if (session.getAttribute("Cart") != null) {
@@ -107,7 +107,7 @@ if (cookies != null) {
 							<i class="fas fa-user action-icon" 
 		                        role="button" 
 		                        tabindex="0"
-		                        onclick="window.location.href='UserArea'"
+		                        onclick="window.location.href='UserArea?section=main'"
 		                        aria-label="Accedi al tuo account"></i>
 		                    <i class="fas fa-sign-out-alt action-icon" 
 	                        	role="button" 
@@ -126,45 +126,57 @@ if (cookies != null) {
 	        </nav>
 	    </header>
 
-    <section class="legal-section">
-        <div class="content-container">
-            <h1 class="section-title">Termini e Condizioni</h1>
-    
-            <div class="legal-text">
-                <h2>1. Accettazione dei termini</h2>
-                <p>L'uso del sito costituisce accettazione integrale dei presenti termini.</p>
-    
-                <h2>2. Condizioni di vendita</h2>
-                <ul>
-                    <li>Prezzi inclusi di IVA ed eventuali tasse</li>
-                    <li>Pagamenti sicuri tramite gateway certificati</li>
-                    <li>Diritto di recesso entro 14 giorni dalla consegna</li>
-                    <li>Resi gratuiti entro 30 giorni per prodotti integri</li>
-                </ul>
-    
-                <h2>3. ProprietÃ  intellettuale</h2>
-                <p>Tutti i contenuti del sito (logo, testi, immagini) sono protetti da copyright e marchi registrati.</p>
-    
-                <h2>4. Limitazioni di responsabilitÃ </h2>
-                <p>Non siamo responsabili per:</p>
-                <ul>
-                    <li>Uso improprio dei prodotti</li>
-                    <li>Interruzioni di servizio non dipendenti dalla nostra volontÃ </li>
-                    <li>Contenuti di siti terzi linkati</li>
-                </ul>
-    
-                <h2>5. Modifiche ai termini</h2>
-                <p>Ci riserviamo il diritto di aggiornare questi termini. Le modifiche saranno effettive dalla pubblicazione.</p>
+    <section class="products-section">
+        <div class="results-header">
+			<input type="hidden" id="search_title" value="<%= request.getParameter("name") %>">
+            <h2 class="section-title">Risultati per "<%= request.getParameter("name") %>"</h2>
+            <div class="filters-container">
+            	<p>Ordina per:</p>
+                <select class="sort-select" id="sortSelect">
+                    <option value="1" >Nome</option>
+                    <option value="2">Prezzo Crescente</option>
+                    <option value="3">Prezzo Decrescente</option>
+                    <option value="4">Più recente</option>
+                </select>
+            </div>
+            <div class="filters-container">
+            	<p>Categoria:</p>
+                <select class="sort-select" id="categorySelect">
+					<option value="0">Tutti</option>
+                	<%HashMap<Integer, String> catList = (HashMap<Integer, String>) request.getAttribute("Categories");
+			        if (catList != null) {
+			       		for (int tmp : catList.keySet()) {%>
+							<option value="<%= tmp %>"><%= catList.get(tmp) %></option>
+		            	<%}
+		          	}%>
+                </select>
             </div>
         </div>
-    </section>
 
+        <!-- Griglia Risultati -->
+        <div class="products-grid">
+	        <%
+	        ArrayList<Product> list = (ArrayList<Product>) request.getAttribute("ProductsList");
+	        if (list != null) {
+	       		for (Product _tmp : list) {%>
+					<div class="product-card">
+		                <a href="ViewProduct?id=<%= _tmp.id %>"><img src="<%= _tmp.image %>" class="product-image" alt="<%= _tmp.name %>"></a>
+		                <h3><%= _tmp.name %></h3>
+		                <p class="product-price"><%= _tmp.price %></p>
+		                <button class="btn" onclick="addToCart(<%= _tmp.id %>)">Aggiungi al carello</button>
+		            </div>
+            	<%}
+          	}%>
+        </div>
+        
+    </section>
+    
     <footer>
         <div class="footer-container">
             <div class="footer-top">
                 <div class="footer-brand">
                     <h3 class="footer-logo">TecnoStore</h3>
-                    <p class="footer-tagline">Innovazione e qualitÃ  dal 2020</p>
+                    <p class="footer-tagline">Innovazione e qualità  dal 2020</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -187,12 +199,12 @@ if (cookies != null) {
                 <div class="footer-col">
                     <h4 class="footer-title">Supporto</h4>
                     <ul>
-                       <li><a href="support.jsp">Centro assistenza</a></li>
-                       <li><a href="shopping_guide.jsp">Guida all'acquisto</a></li>
-                       <li><a href="warranty_support.jsp">Garanzia</a></li>
-                       <li><a href="returns_refunds.jsp">Resi e rimborsi</a></li>
-                       <li><a href="contacts.jsp">Contatti</a></li>
-                   </ul>
+                        <li><a href="#">Centro assistenza</a></li>
+                        <li><a href="#">Guida all'acquisto</a></li>
+                        <li><a href="#">Garanzia</a></li>
+                        <li><a href="#">Resi e rimborsi</a></li>
+                        <li><a href="#">Contatti</a></li>
+                    </ul>
                 </div>
     
                 <div class="footer-col">
@@ -217,9 +229,9 @@ if (cookies != null) {
                 <div class="legal-links">
                     <p>&copy; 2024 TecnoStore. Tutti i diritti riservati</p>
                     <div>
-                        <a href="privacy_policy.jsp">Privacy Policy</a>
-                        <a href="terms_conditions.jsp">Termini e condizioni</a>
-                        <a href="cookies_settings.jsp">Cookie Settings</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Termini e condizioni</a>
+                        <a href="#">Cookie Settings</a>
                     </div>
                 </div>
             </div>
@@ -243,6 +255,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-input');
     const searchField = searchInput.querySelector('input');
 
+    const sortSelect = document.getElementById('sortSelect');
+    const categorySelect = document.getElementById('categorySelect');
+    
     searchIcon.addEventListener('click', (e) => {
         e.stopPropagation();
         searchInput.classList.toggle('active');
@@ -257,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
     searchField.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const value = searchField.value.trim();
@@ -269,18 +283,48 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-	// Inizializza carrello
-	updateCartTotal();
-	//updateCartPrice();
+    
+    sortSelect.addEventListener('change', () => {
+    	const title = document.getElementById("search_title");
+        window.location.href = 'Search?name=' + title.value + "&sorting=" + sortSelect.value + "&category=" + categorySelect.value;
+    });
+    
+    categorySelect.addEventListener('change', () => {
+    	const title = document.getElementById("search_title");
+        window.location.href = 'Search?name=' + title.value + "&sorting=" + sortSelect.value + "&category=" + categorySelect.value;
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') {
+            searchInput.classList.remove('active');
+        }
+    });
+    
+    //--------------------------------------------------------------------
+    function getUrlParameter(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+    }
+
+    const sortValue = getUrlParameter('sorting');
+    if (sortValue && ['1', '2', '3', '4'].includes(sortValue)) {
+        sortSelect.value = sortValue;
+    }
+    
+    const categoryValue = getUrlParameter('category');
+    if (categoryValue) {
+        categorySelect.value = categoryValue;
+    }
 });
+
 
 // Gestione apertura/chiusura carrello
 const cartIcon = document.getElementById('cart-icon');
-    const cartDropdown = document.querySelector('.cart-dropdown');
+const cartDropdown = document.querySelector('.cart-dropdown');
 
-    cartIcon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        cartDropdown.classList.toggle('active');
+cartIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cartDropdown.classList.toggle('active');
 });
 
 document.addEventListener('click', (e) => {
@@ -296,18 +340,25 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-window.addEventListener('load', () => {
-const loader = document.querySelector('.loader-container');
 
-    // Piccolo ritardo per fluiditÃ 
-    setTimeout(() => {
-        loader.classList.add('hidden');
-        
-        // Rimuovi dopo l'animazione
-        setTimeout(() => {
-            loader.remove();
-        }, 1200);
-    }, 600);
+function toggleFilters() {
+    document.querySelector('.filters-sidebar').classList.toggle('active');
+}
+
+updateCartTotal();
+
+window.addEventListener('load', () => {
+	const loader = document.querySelector('.loader-container');
+	
+	// Piccolo ritardo per fluiditÃ 
+	setTimeout(() => {
+	    loader.classList.add('hidden');
+	    
+	    // Rimuovi dopo l'animazione
+	    setTimeout(() => {
+	        loader.remove();
+	    }, 1200);
+	}, 600);
 });
 </script>
 </html>

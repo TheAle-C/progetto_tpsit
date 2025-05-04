@@ -46,9 +46,9 @@ if (cookies != null) {
 	        <nav class="nav-container">
 	            <a href="index.jsp" class="logo">Tecno</a>
 	            <ul class="nav-links">
-	                <li><a href="#">Telefonia</a></li>
-	                <li><a href="#">TV</a></li>
-	                <li><a href="#">Cuffie</a></li>
+	                <li><a href="Search?name=&sorting=1&category=1">Telefonia</a></li>
+	                <li><a href="Search?name=&sorting=1&category=3">TV</a></li>
+	                <li><a href="Search?name=&sorting=1&category=2">Cuffie</a></li>
 	                <li><a href="support.jsp">Supporto</a></li>
 	            </ul>
 	            <div class="header-actions">
@@ -242,7 +242,19 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInput.classList.remove('active');
         }
     });
-	
+
+
+    searchField.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const value = searchField.value.trim();
+            if (value) {
+                window.location.href = 'Search?name=' + encodeURIComponent(value) + "&sorting=" + sortSelect.value;
+            }
+            else {
+            	window.location.href = 'Search?name=' + "&sorting=" + sortSelect.value;
+            }
+        }
+    });
 	// Inizializza carrello
 	updateCartTotal();
 	//updateCartPrice();

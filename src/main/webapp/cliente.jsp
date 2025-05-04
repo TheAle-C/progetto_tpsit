@@ -40,7 +40,7 @@ else {
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>TecnoStore | Profilo Cliente</title>
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-	    <link rel="stylesheet" href="CSS/admin.css">
+	    <link rel="stylesheet" href="CSS/clienti.css">
 	</head>
 	<body>
 	    <!-- Sidebar Semplificata -->
@@ -56,15 +56,9 @@ else {
 	                </a>
 	            </li>
 	            <li class="sidebar-item">
-	                <a href="#">
+	                <a href="UserArea?section=orders">
 	                    <i class="fas fa-box-open"></i>
 	                    <span>I Miei Ordini</span>
-	                </a>
-	            </li>
-	            <li class="sidebar-item">
-	                <a href="#">
-	                    <i class="fas fa-heart"></i>
-	                    <span>Preferiti</span>
 	                </a>
 	            </li>
 	        </ul>

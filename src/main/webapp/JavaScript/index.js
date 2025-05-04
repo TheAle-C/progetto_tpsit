@@ -150,18 +150,19 @@ function sendCookiePreference() {
     const marketingCookie = document.getElementById("marketing-cookies").checked;
 
 	// Recupera il prodotto selezionato tramite l'ID del prodotto
-		$.ajax({
-	        url: "UpdateCookiesPreferences",  // URL del tuo servlet
-	        method: "GET",
-	        data: {
-	            AnalyticsCookie: analyticsCookie,
-				MarketingCookie: marketingCookie
-	        },
-	        success: function(response) {
-				
-	        },
-	        error: function() {
-	            alert("Errore durante l'aggiornamento dei cookies");
-	        }
-	    });
+	$.ajax({
+        url: "UpdateCookiesPreferences",  // URL del tuo servlet
+        method: "GET",
+        data: {
+            AnalyticsCookie: analyticsCookie,
+			MarketingCookie: marketingCookie
+        },
+        success: function(response) {
+			
+        },
+        error: function() {
+            alert("Errore durante l'aggiornamento dei cookies");
+        }
+    });
 }
+// ------------------------------------------------------------------------------------------------------------------------- 

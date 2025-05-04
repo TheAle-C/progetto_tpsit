@@ -46,9 +46,9 @@ if (cookies != null) {
 	        <nav class="nav-container">
 	            <a href="index.jsp" class="logo">Tecno</a>
 	            <ul class="nav-links">
-	                <li><a href="#">Telefonia</a></li>
-	                <li><a href="#">TV</a></li>
-	                <li><a href="#">Cuffie</a></li>
+	                <li><a href="Search?name=&sorting=1&category=1">Telefonia</a></li>
+	                <li><a href="Search?name=&sorting=1&category=3">TV</a></li>
+	                <li><a href="Search?name=&sorting=1&category=2">Cuffie</a></li>
 	                <li><a href="support.jsp">Supporto</a></li>
 	            </ul>
 	            <div class="header-actions">
@@ -107,7 +107,7 @@ if (cookies != null) {
 							<i class="fas fa-user action-icon" 
 		                        role="button" 
 		                        tabindex="0"
-		                        onclick="window.location.href='UserArea'"
+		                        onclick="window.location.href='UserArea?section=main'"
 		                        aria-label="Accedi al tuo account"></i>
 		                    <i class="fas fa-sign-out-alt action-icon" 
 	                        	role="button" 
@@ -204,9 +204,9 @@ if (cookies != null) {
 	                <div class="legal-links">
 	                    <p>&copy; 2024 TecnoStore. Tutti i diritti riservati</p>
 	                    <div>
-	                        <a href="#">Privacy Policy</a>
-	                        <a href="#">Termini e condizioni</a>
-	                        <a href="#">Cookie Settings</a>
+	                        <a href="privacy_policy.jsp">Privacy Policy</a>
+	                        <a href="terms_conditions.jsp">Termini e condizioni</a>
+	                        <a href="cookies_settings.jsp">Cookie Settings</a>
 	                    </div>
 	                </div>
 	            </div>
@@ -259,7 +259,18 @@ if (cookies != null) {
 	        }
 	    });
 	    
-	    
+	    searchField.addEventListener('keydown', (e) => {
+	        if (e.key === 'Enter') {
+	            const value = searchField.value.trim();
+	            const sortSelect = document.getElementById('sortSelect');
+	            if (value) {
+	                window.location.href = 'Search?name=' + encodeURIComponent(value) + "&sorting=1&category=0";
+	            }
+	            else {
+	            	window.location.href = 'Search?name=' + "&sorting=1&category=0";
+	            }
+	        }
+	    });
 		
 		// Inizializza carrello
 		updateCartTotal();

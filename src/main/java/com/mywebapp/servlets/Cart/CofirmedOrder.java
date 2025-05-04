@@ -37,18 +37,13 @@ public class CofirmedOrder extends HttpServlet {
         try {
             System.out.println("0");
             if (rs1.next()) {
-                ResultSet count_orders = db.query("SELECT count(*) AS id FROM orders");
-                System.out.println("1");
-                if (!count_orders.next()) return;
-                System.out.println("2");
+                db.queryUpdate("INSERT INTO orders (status, user_id) VALUES ('In elaborazione', '" + rs1.getInt("id") + "')");
 
-                db.queryUpdate("INSERT INTO orders (id, status, user_id) VALUES ('" + (count_orders.getInt("id") + 1) + "', 'In elaborazione', '" + rs1.getInt("id") + "')");
+                ResultSet last_id = db.query("SELECT LAST_INSERT_ID() as id");
+                if (!last_id.next()) return;
 
-                System.out.println("3");
                 for (Product tmp : (ArrayList<Product>) session.getAttribute("Cart")) {
-                    db.queryUpdate("INSERT INTO order_details (order_id, product_id) VALUES ('" + (count_orders.getInt("id") + 1) + "', '" + tmp.id + "')");
-
-                    System.out.println("4");
+                    db.queryUpdate("INSERT INTO order_details (order_id, product_id) VALUES ('" + last_id.getInt("id") + "', '" + tmp.id + "')");
                 }
             }
         } catch (SQLException e) {

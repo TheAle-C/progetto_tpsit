@@ -2,9 +2,7 @@ package com.mywebapp.MySql;
 
 import com.mywebapp.Other.Logger;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Database {
     MySqlConnection conn;
@@ -39,6 +37,10 @@ public class Database {
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
+    }
+
+    public Connection getConnection() {
+        return conn.getConnection();
     }
 
     public void close() {

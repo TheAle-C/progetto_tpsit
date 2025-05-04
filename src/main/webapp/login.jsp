@@ -23,11 +23,11 @@ if (cookies != null) {
 <body>
     <header>
         <nav class="nav-container">
-            <a href="#" class="logo">Tecno</a>
+            <a href="index.jsp" class="logo">Tecno</a>
             <ul class="nav-links">
-                <li><a href="#">Store</a></li>
-                <li><a href="#">Dispositivi</a></li>
-                <li><a href="#">Accessori</a></li>
+                <li><a href="Search?name=&sorting=1&category=1">Telefonia</a></li>
+                <li><a href="Search?name=&sorting=1&category=3">TV</a></li>
+                <li><a href="Search?name=&sorting=1&category=2">Cuffie</a></li>
                 <li><a href="support.jsp">Supporto</a></li>
             </ul>
             <div class="header-actions">

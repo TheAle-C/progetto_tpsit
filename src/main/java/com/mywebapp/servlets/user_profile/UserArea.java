@@ -24,6 +24,21 @@ public class UserArea extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Cookie[] cookies = req.getCookies();
+
+        if (cookies != null) {
+            for (Cookie tmp : cookies) {
+                if ("email".equals(tmp.getName()) && tmp.getValue() != null && !tmp.getValue().isEmpty()) {
+                    if (tmp.getValue().equals("admin@admin")) {
+                        resp.sendRedirect("AdminArea");
+                        return;
+                    }
+                }
+            }
+        }
+
+        String section = req.getParameter("section");
+
         Database db = new Database("root", "");
         db.connect("127.0.0.1", "3306", "webapp");
 
@@ -36,7 +51,15 @@ public class UserArea extends HttpServlet {
         req.setAttribute("user_ordes", userOrders);
 
         db.close();
-        req.getRequestDispatcher("/cliente.jsp").forward(req, resp);
+        if (section == null) {
+            req.getRequestDispatcher("/cliente.jsp").forward(req, resp);
+        }
+        else if (section.equals("orders")) {
+            req.getRequestDispatcher("/order.jsp").forward(req, resp);
+        }
+        else {
+            req.getRequestDispatcher("/cliente.jsp").forward(req, resp);
+        }
     }
 
     private UserData getUserData(HttpServletRequest req, HttpServletResponse resp, Database db) throws ServletException, IOException {

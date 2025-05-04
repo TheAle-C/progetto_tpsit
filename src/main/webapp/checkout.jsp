@@ -46,9 +46,9 @@ if (cookies != null) {
         <nav class="nav-container">
             <a href="#" class="logo">Tecno</a>
             <ul class="nav-links">
-                <li><a href="#">Telefonia</a></li>
-                <li><a href="#">TV</a></li>
-                <li><a href="#">Cuffie</a></li>
+                <li><a href="Search?name=&sorting=1&category=1">Telefonia</a></li>
+                <li><a href="Search?name=&sorting=1&category=3">TV</a></li>
+                <li><a href="Search?name=&sorting=1&category=2">Cuffie</a></li>
                 <li><a href="support.jsp">Supporto</a></li>
             </ul>
             <div class="header-actions">
@@ -57,52 +57,6 @@ if (cookies != null) {
                     <i class="fas fa-search"></i>
                 </div>
                 <div class="actions-container">
-                    <div class="cart-wrapper">
-                        <i class="fas fa-shopping-bag action-icon" id="cart-icon"></i>
-                        <span class="cart-counter">3</span>
-                        <div class="cart-dropdown hidden">
-                            <div class="cart-header">
-                                <h4>Il tuo carrello</h4>
-                                <span class="cart-items-count">3 articoli</span>
-                            </div>
-                            <div class="cart-items" id="miniCartProducts">
-                                <% //if (isLoggedIn) {%>
-                                	
-                                <% //} else {
-	                                	if (session.getAttribute("Cart") != null) {
-	                    					ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("Cart");
-	                    					
-	                    					cartTotalPrice = 0;
-	                    					int items = 0;
-	                    					
-	                    		            for (Product _tmp : list) {
-	                    		            	cartTotalPrice += _tmp.price;
-	                    		            	items ++;
-	                    		            	if (items < 8) { 
-	                    		            		%>
-												<div class="cart-item" id="cart-item">
-	                    		            	    <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
-												    <div class="item-details">
-												        <h5><%= _tmp.name %></h5>
-												        <p class="item-price" data-price="<%= _tmp.price %>">€<%= _tmp.price %></p>
-												    </div>
-												    <button class="remove-item">&times;</button>
-												</div>
-									  	  <%}
-	                    		            }
-	                                	}
-	                                //} %>
-
-                                <!-- Altri items... -->
-                            </div>
-                            <div class="cart-total">
-                                <span>Totale:</span>
-                                <span class="total-amount" id="total-amount"><%= String.format("%.2f", cartTotalPrice) %>€</span>
-                            </div>
-                            <button class="btn" onclick="window.location.href='checkout.jsp'">Checkout</button>
-                        </div>
-                    </div>
-                    
 					<% if (isLoggedIn) {%>
 						<i class="fas fa-user action-icon" 
 	                        role="button" 
@@ -186,11 +140,12 @@ if (cookies != null) {
                 <div class="summary-totals">
                     <div class="total-row">
                         <span>Subtotale:</span>
-                        <span>€<%= cartTotalPrice %></span>
+                        <span>€<%= String.format("%.2f", cartTotalPrice) %></span>
                     </div>
                     <div class="total-row">
                         <span>Spedizione:</span>
-                        <% if (cartTotalPrice < 50f) {%>
+                        <% if (cartTotalPrice < 50) { 
+                        	cartTotalPrice += 10f; %>
                         	<span>€10</span>
                         <%} else {%>
                         	<span>Gratuita</span>
@@ -198,11 +153,15 @@ if (cookies != null) {
                     </div>
                     <div class="total-row grand-total">
                         <span>Totale:</span>
-                        <span>€<%= (cartTotalPrice + 10f) %></span>
+                        <span>€<%= String.format("%.2f", cartTotalPrice) %></span>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" onclick="window.location.href='OrderConfirmed'">Conferma ordine</button>
+				<% if (isLoggedIn) {%>
+                	<button class="btn btn-primary" onclick="window.location.href='OrderConfirmed'">Conferma ordine</button>
+                <% } else { %>
+                	<button class="btn btn-primary" onclick="window.location.href='login.jsp'">Conferma ordine</button>
+                <% } %>
             </aside>
         </div>
     </main>
@@ -213,7 +172,7 @@ if (cookies != null) {
             <div class="footer-top">
                 <div class="footer-brand">
                     <h3 class="footer-logo">TecnoStore</h3>
-                    <p class="footer-tagline">Innovazione e qualitÃ  dal 2020</p>
+                    <p class="footer-tagline">Innovazione e qualità  dal 2020</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -314,29 +273,21 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInput.classList.remove('active');
         }
     });
-    
-    
-	
-	// Inizializza carrello
-	updateCartTotal();
-	//updateCartPrice();
+
+
+    searchField.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const value = searchField.value.trim();
+            if (value) {
+                window.location.href = 'Search?name=' + encodeURIComponent(value) + "&sorting=" + sortSelect.value;
+            }
+            else {
+            	window.location.href = 'Search?name=' + "&sorting=" + sortSelect.value;
+            }
+        }
+    });
+
 });
-
-// Gestione apertura/chiusura carrello
-const cartIcon = document.getElementById('cart-icon');
-    const cartDropdown = document.querySelector('.cart-dropdown');
-
-    cartIcon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        cartDropdown.classList.toggle('active');
-});
-
-document.addEventListener('click', (e) => {
-    if(!cartDropdown.contains(e.target) && !cartIcon.contains(e.target)) {
-        cartDropdown.classList.remove('active');
-    }
-});
-
 
 window.addEventListener('load', () => {
 const loader = document.querySelector('.loader-container');
