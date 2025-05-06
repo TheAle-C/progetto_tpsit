@@ -35,7 +35,8 @@ public class Register extends HttpServlet {
 
         String name = request.getParameter("nameInput");
         String surname = request.getParameter("surnameInput");
-        String username = request.getParameter("usernameInput");
+        String username = "null";
+        //String username = request.getParameter("usernameInput");
         String date = request.getParameter("dateInput");
 
         String rememberMeInput = request.getParameter("rememberMeInput");

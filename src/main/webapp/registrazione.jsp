@@ -57,11 +57,7 @@ if (cookies != null) {
                         </div>
                     </div>
     
-                    <div class="input-group">
-                        <input type="text" id="username" name="usernameInput" required>
-                        <label for="username">Username</label>
-                        <i class="fas fa-user-tag icon"></i>
-                    </div>
+                    
     
                     <div class="input-group">
                         <input type="email" id="email" name="emailInput" required>

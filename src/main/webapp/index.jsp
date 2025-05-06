@@ -66,35 +66,30 @@ if (cookies != null) {
 	                                <span class="cart-items-count">3 articoli</span>
 	                            </div>
 	                            <div class="cart-items" id="miniCartProducts">
-	                                <% //if (isLoggedIn) {%>
-	                                	
-	                                <% //} else {
-	                                	if (session.getAttribute("Cart") != null) {
-	                    					ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("Cart");
-	                    					
-	                    					cartTotalPrice = 0;
-	                    					int items = 0;
-	                    					
-	                    		            for (Product _tmp : list) {
-	                    		            	cartTotalPrice += _tmp.price;
-	                    		            	items ++;
-	                    		            	if (items < 8) { 
-	                    		            		%>
-													<div class="cart-item" id="cart-item">
-		                    		            	    <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
-													    <div class="item-details">
-													        <h5><%= _tmp.name %></h5>
-													        <p class="item-price" data-price="<%= _tmp.price %>">€<%= _tmp.price %></p>
-													    </div>
-													    <button class="remove-item">&times;</button>
-													</div>
-										  	  <%}
-	                    		            }
-	                                	}
-	                                //} %>
+                                <%if (session.getAttribute("Cart") != null) {
+                    					ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("Cart");
+                    					
+                    					cartTotalPrice = 0;
+                    					int items = 0;
+                    					
+                    		            for (Product _tmp : list) {
+                    		            	cartTotalPrice += _tmp.price;
+                    		            	items ++;
+                    		            	if (items < 8) {%>
+												<div class="cart-item" id="cart-item">
+	                    		            	    <img src="<%= _tmp.image %>" alt="<%= _tmp.name %>">
+												    <div class="item-details">
+												        <h5><%= _tmp.name %></h5>
+												        <p class="item-price" data-price="<%= _tmp.price %>">€<%= _tmp.price %></p>
+												    </div>
+												    <button class="remove-item" onclick="removeItem(<%= _tmp.id %>)">&times;</button>
+												</div>
+									  	  <%}
+                    		            }
+                                	}%>
 	
 	                                <!-- Altri items... -->
-	                            </div>
+	                            </div>                
 	                            <div class="cart-total">
 	                                <span>Totale:</span>
 	                                <span class="total-amount" id="total-amount"><%= String.format("%.2f", cartTotalPrice) %>€</span>
@@ -303,15 +298,15 @@ if (cookies != null) {
 	window.addEventListener('load', () => {
 		const loader = document.querySelector('.loader-container');
 		
-		    // Piccolo ritardo per fluiditÃ 
-		    setTimeout(() => {
-		        loader.classList.add('hidden');
-		        
-		        // Rimuovi dopo l'animazione
-		        setTimeout(() => {
-		            loader.remove();
-		        }, 1200);
-		    }, 600);
-		});
+	    // Piccolo ritardo per fluiditÃ 
+	    setTimeout(() => {
+	        loader.classList.add('hidden');
+	        
+	        // Rimuovi dopo l'animazione
+	        setTimeout(() => {
+	            loader.remove();
+	        }, 1200);
+	    }, 600);
+	});
 	</script>
 </html>

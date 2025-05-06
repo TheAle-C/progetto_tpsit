@@ -94,7 +94,7 @@ if (cookies != null) {
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>CittÃ </label>
+                            <label>Città </label>
                             <input type="text" required class="form-input">
                         </div>
                         <div class="form-group">

@@ -16,7 +16,7 @@ public class RemoveToCart extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        int id = Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("IdProduct"));
 
         ArrayList<Product> prodList;
         Object obj = session.getAttribute("Cart");
@@ -27,14 +27,10 @@ public class RemoveToCart extends HttpServlet {
                 for (Product _tmp : prodList) {
                     if (_tmp.id == id) {
                         prodList.remove(_tmp);
-                        resp.sendRedirect("cart.jsp");
                         break;
                     }
                 }
             }
-        }
-        else {
-            resp.sendRedirect("cart.jsp");
         }
     }
 }

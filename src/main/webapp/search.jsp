@@ -162,7 +162,7 @@ if (cookies != null) {
 					<div class="product-card">
 		                <a href="ViewProduct?id=<%= _tmp.id %>"><img src="<%= _tmp.image %>" class="product-image" alt="<%= _tmp.name %>"></a>
 		                <h3><%= _tmp.name %></h3>
-		                <p class="product-price"><%= _tmp.price %></p>
+		                <p class="product-price"><%= _tmp.price %> €</p>
 		                <button class="btn" onclick="addToCart(<%= _tmp.id %>)">Aggiungi al carello</button>
 		            </div>
             	<%}

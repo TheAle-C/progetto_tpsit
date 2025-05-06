@@ -18,6 +18,29 @@ function addToCart(productId) {
     });
 }
 
+
+function removeItem(productId) {
+    const button = event.target;
+    const cartItem = button.closest('.cart-item');
+    cartItem.remove();
+	updateCartPrice();
+	updateCartTotal();
+	
+	$.ajax({
+        url: "RemoveToCart",  // URL del tuo servlet
+        method: "GET",
+        data: {
+            IdProduct: productId
+        },
+        success: function() {
+			alert("Prodotto rimosso dal carello!");
+        },
+        error: function() {
+            alert("Errore durante al rimozione dal carrello.");
+        }
+    });
+}
+
 function updateCart(response) {
 	console.log("Risposta ricevuta:", response);
 	
@@ -128,7 +151,7 @@ function loadNewProduct() {
 	                card.innerHTML = `
 	                    <img src="${product.image}" class="product-image" alt="${product.name}">
 	                    <h3>${product.name}</h3>
-	                    <p class="product-price">${product.price} $</p>
+	                    <p class="product-price">${product.price} €</p>
 	                    <input type="hidden" name="IdProduct" value="${product.id}">
 	                    <button class="btn" onclick="addToCart(${product.id})">Acquista ora</button>
 	                `;
