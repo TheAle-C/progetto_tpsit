@@ -43,7 +43,7 @@ if (cookies != null) {
             <div class="auth-card floating-element">
                 <h2>Crea un account</h2>
                 
-                <form class="auth-form" action="verifyRegister" method="post">
+                <form class="auth-form" action="verifyReg" method="post">
                     <div class="double-input">
                         <div class="input-group">
                             <input type="text" id="nome" name="nameInput" required>
@@ -56,9 +56,7 @@ if (cookies != null) {
                             <i class="fas fa-user icon"></i>
                         </div>
                     </div>
-    
-                    
-    
+
                     <div class="input-group">
                         <input type="email" id="email" name="emailInput" required>
                         <label for="email">Email</label>
